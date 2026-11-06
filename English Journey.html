@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>English Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#14284b;--navy2:#1e3a6e;--sky:#dbeafe;--sky2:#93c5fd;--bg:#f3f5f9;--card:#fff;--text:#14284b;--mute:#5b6b86;--line:#e3e8f0;--ok:#16a34a;--warn:#f59e0b;--err:#dc2626;--side:#14284b;--sidetext:#cfdcf5;--active:#ffffff22;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--navy:#bcd3fb;--navy2:#93c5fd;--sky:#1d2f52;--bg:#0c1424;--card:#131f36;--text:#e8eefb;--mute:#93a4c4;--line:#22314f;--side:#0a111f;--active:#ffffff18;color-scheme:dark}}
+:root[data-theme="dark"]{--navy:#bcd3fb;--navy2:#93c5fd;--sky:#1d2f52;--bg:#0c1424;--card:#131f36;--text:#e8eefb;--mute:#93a4c4;--line:#22314f;--side:#0a111f;--active:#ffffff18;color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0}
+body{background:var(--bg);color:var(--text);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;font-size:16px;line-height:1.6}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--sky2);outline-offset:2px}
+.app{display:flex;min-height:100vh}
+.side{width:236px;background:var(--side);color:var(--sidetext);padding:24px 16px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:19px;margin:0 8px 22px}
+.brand i{width:34px;height:34px;border-radius:10px;background:#93c5fd;color:#14284b;display:grid;place-items:center;font-style:normal;font-weight:700}
+.nav{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;color:inherit;background:none;border:0;text-align:left;width:100%;font-size:16px}
+.nav:hover{background:var(--active)}
+.nav[aria-current=page]{background:var(--active);color:#fff;font-weight:700}
+svg.ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+main{flex:1;min-width:0;padding:32px;max-width:1040px;margin:0 auto;width:100%}
+h1{font-size:28px;margin:0 0 4px;line-height:1.3}
+h2{font-size:19px;margin:0 0 12px}
+p{margin:0}
+.mute{color:var(--mute)}
+.top{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.av{width:52px;height:52px;border-radius:50%;background:var(--navy);color:var(--card);display:grid;place-items:center;font-weight:700;font-size:20px;flex-shrink:0}
+.badge{display:inline-block;background:var(--sky);color:var(--navy);border-radius:99px;padding:2px 12px;font-size:14px;font-weight:700}
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g2{grid-template-columns:1.4fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 1px 3px rgba(20,40,75,.06)}
+.stat b{display:block;font-size:26px;line-height:1.2}
+.stat span{color:var(--mute);font-size:14px}
+.bar{height:12px;background:var(--sky);border-radius:99px;overflow:hidden;margin:10px 0 6px}
+.bar>div{height:100%;background:var(--navy2);border-radius:99px;transition:width .6s ease}
+.task{display:flex;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.task:first-of-type{border-top:0}
+.chk{width:24px;height:24px;border-radius:50%;border:2px solid var(--sky2);flex-shrink:0;display:grid;place-items:center}
+.chk.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.chk svg{width:14px;height:14px;stroke:#fff;fill:none;stroke-width:3}
+.btn{background:var(--navy);color:var(--card);border:0;border-radius:12px;padding:12px 20px;font-weight:700;min-height:44px}
+.btn:hover{background:var(--navy2)}
+.btn.ghost{background:var(--sky);color:var(--navy)}
+.week{display:flex;gap:8px;align-items:flex-end;height:120px;margin-top:8px}
+.week div{flex:1;text-align:center;font-size:13px;color:var(--mute);display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:6px}
+.week i{display:block;background:var(--sky2);border-radius:8px 8px 4px 4px;min-height:6px}
+.quote{border-left:4px solid var(--sky2);padding-left:14px}
+.quote em{font-style:normal;font-weight:700;font-size:18px;display:block}
+.item{display:flex;gap:14px;align-items:flex-start}
+.item .ic{margin-top:3px;color:var(--navy2)}
+.tag{margin-left:auto;font-size:13px;white-space:nowrap;background:var(--sky);color:var(--navy);padding:2px 10px;border-radius:99px;align-self:flex-start}
+.field{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0;border-top:1px solid var(--line)}
+.field:first-of-type{border-top:0}
+input[type=text],select{font:inherit;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px;max-width:180px}
+.sw{position:relative;width:52px;height:30px;border-radius:99px;border:0;background:var(--line);padding:0;flex-shrink:0}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw[aria-checked=true]{background:var(--ok)}
+.sw[aria-checked=true]::after{transform:translateX(22px)}
+.bottom{display:none}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--navy);color:var(--card);padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .3s}
+.toast.on{opacity:1}
+@media (max-width:860px){
+.side{display:none}
+main{padding:20px 16px 110px}
+.g4{grid-template-columns:repeat(2,1fr)}
+.g2,.g3{grid-template-columns:1fr}
+h1{font-size:23px}
+.bottom{display:flex;position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+.bottom button{flex:1;background:none;border:0;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;min-height:52px;border-radius:12px}
+.bottom button[aria-current=page]{color:var(--navy);font-weight:700}
+.bottom button[aria-current=page] svg{background:var(--sky);border-radius:99px;padding:3px;width:32px;height:26px}
+.toast{bottom:100px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.chip{background:var(--card);border:1px solid var(--line);color:var(--text);border-radius:99px;padding:8px 14px;min-height:40px}.chip[aria-pressed=true]{background:var(--navy);color:var(--card);border-color:var(--navy)}.row{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line)}.rb{flex:1;text-align:left;background:none;border:0;color:var(--text);padding:8px 0;font-size:16px;line-height:1.5;min-height:44px}.ib{background:var(--sky);color:var(--navy);border:0;border-radius:10px;padding:8px 12px;min-height:44px}.wh{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}.sec{margin-top:18px}.sec h2{font-size:15px;color:var(--mute);margin-bottom:2px}input[type=search]{font:inherit;width:100%;background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-height:46px}.acts{display:flex;gap:8px;flex-wrap:wrap}.acts .chip{flex:0 0 auto}.rowb{width:100%;background:none;border:0;border-top:1px solid var(--line);border-radius:0;font:inherit;text-align:left;color:var(--text);padding:0}.rowb .rb{color:inherit;pointer-events:none}.rowb.soon{color:var(--mute)}.rowb:hover{background:var(--bg)}.opt{border-radius:14px;text-align:left;font-size:17px;line-height:1.4;padding:12px 14px}.opt.ok{background:rgba(22,163,74,.18);border-color:var(--ok)}.opt.no{background:rgba(220,38,38,.16);border-color:var(--err)}
+</style>
+</head>
+<body>
+<div class="app">
+<nav class="side" id="side" aria-label="主要導覽"></nav>
+<main id="main"></main>
+</div>
+<nav class="bottom" id="bottom" aria-label="主要導覽"></nav>
+<div class="toast" id="toast" role="status"></div>
+<script>
+const KEY='ej_state_v1';
+const DEF={name:'學習者',level:'A1',goal:10,xp:0,streak:0,words:0,today:0,week:[0,0,0,0,0,0,0],tasks:[false,false,false,false,false],theme:''};
+let S=load();
+function load(){try{return Object.assign({},DEF,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){return {...DEF}}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const IP={
+home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',
+learn:'<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2z"/><path d="M4 21V5"/>',
+practice:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/>',
+progress:'<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>',
+profile:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/>',
+check:'<path d="M5 12l5 5 9-10"/>'};
+const ic=n=>`<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${IP[n]}</svg>`;
+const NAV=[['home','首頁'],['learn','學習'],['practice','練習'],['progress','進度'],['profile','個人']];
+const LEVELS=['A1','A2','B1','B2','C1'];
+const LV_NAME={A1:'入門',A2:'基礎',B1:'中級',B2:'中高級',C1:'進階'};
+const QUOTES=[['Small steps every day lead to big progress.','每天一小步，累積成大進步。'],['Mistakes are proof that you are trying.','犯錯代表你正在努力嘗試。'],['Consistency beats intensity.','持續比強度更重要。'],['Learn a little, review a lot.','少量學習，多多複習。'],['Today’s effort is tomorrow’s fluency.','今天的努力，就是明天的流利。']];
+const TASKS=['學習 10 個新單字','複習先前學過的單字','完成一個聽力練習','完成一個文法練習','完成一次小測驗'];
+const LEARN=[['單字 A1–C1','五個難度級別，另含日常、學術、商業、多益、旅遊、科技、工程分類','第 2 階段'],['文法課程','從名詞、動詞到時態、被動語態與假設語氣','第 5 階段'],['聽力中心','字母數字、日常對話、新聞到學術講座','第 5 階段'],['口說中心','單字與句子發音、錄音與口說練習','第 5 階段'],['閱讀中心','附中文翻譯與點字查詢的短文','第 5 階段'],['寫作中心','句子、段落、電子郵件與短文練習','第 5 階段']];
+const MODES=['單字卡','選擇題','配對遊戲','聽力測驗','拼字測驗','填空題','句子排序','中翻英','英翻中','圖片單字','極速挑戰','每日複習'];
+const DAYS=['日','一','二','三','四','五','六'];
+function route(){const h=location.hash.slice(1);return NAV.some(n=>n[0]===h)?h:'home'}
+function navHtml(cur,kind){return NAV.map(([k,t])=>`<button class="nav-b ${kind}" data-go="${k}" ${k===cur?'aria-current="page"':''}>${ic(k)}<span>${t}</span></button>`).join('')}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),1800)}
+function setTheme(){const r=document.documentElement;S.theme?r.setAttribute('data-theme',S.theme):r.removeAttribute('data-theme')}
+function greet(){const h=new Date().getHours();return h<12?'早安':h<18?'午安':'晚安'}
+function home(){
+const pct=Math.min(100,Math.round(S.today/S.goal*100));
+const done=S.tasks.filter(Boolean).length;
+const q=QUOTES[Math.floor(Date.now()/864e5)%QUOTES.length];
+const wk=Math.max(1,...S.week);
+const dow=new Date().getDay();
+const wkHtml=S.week.map((v,i)=>`<div><i style="height:${Math.max(6,v/wk*80)}px"></i>${DAYS[(dow-6+i+7)%7]}</div>`).join('');
+const tasks=TASKS.map((t,i)=>`<div class="task"><span class="chk ${S.tasks[i]?'on':''}">${S.tasks[i]?'<svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>':''}</span><span>${t}</span></div>`).join('');
+return `<div class="top"><div class="av" aria-hidden="true">${[...S.name][0]||'學'}</div><div><h1>${greet()}，${esc(S.name)}</h1><span class="badge">目前程度 ${S.level} · ${LV_NAME[S.level]}</span></div></div>
+<div class="grid g4" style="margin-bottom:16px">
+<div class="card stat"><b>${S.words}</b><span>已學單字</span></div>
+<div class="card stat"><b>${S.xp}</b><span>總經驗值 XP</span></div>
+<div class="card stat"><b>${S.streak} 天</b><span>連續學習</span></div>
+<div class="card stat"><b>${S.level}</b><span>英文程度</span></div></div>
+<div class="grid g2" style="margin-bottom:16px">
+<div class="card"><h2>今日目標</h2><p class="mute">今天學習 ${S.today} / ${S.goal} 個單字</p><div class="bar" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><div style="width:${pct}%"></div></div><p class="mute" style="font-size:14px">${pct}% 完成</p>
+<h2 style="margin-top:18px">每日任務 <span class="mute" style="font-size:14px;font-weight:400">${done}/5</span></h2>${tasks}</div>
+<div class="grid" style="align-content:start">
+<div class="card"><h2>繼續學習</h2>${contH()}</div>
+<div class="card"><h2>本週學習統計</h2><div class="week">${wkHtml}</div></div></div></div>
+<div class="grid g2" style="grid-template-columns:1fr 1fr">
+<div class="card"><h2>推薦課程</h2>${recH()}</div>
+<div class="card quote"><h2>每日激勵</h2><em>${q[0]}</em><p class="mute">${q[1]}</p></div></div>`}
+function learn(){return `<h1>學習</h1><p class="mute" style="margin-bottom:20px">所有課程內容會依開發階段逐步開放。</p><div class="grid g2" style="grid-template-columns:1fr 1fr">${LEARN.map(l=>`<div class="card item">${ic('learn')}<div><b>${l[0]}</b><p class="mute" style="font-size:14px">${l[1]}</p></div><span class="tag">${l[2]}</span></div>`).join('')}</div>`}
+function practice(){return `<h1>練習</h1><p class="mute" style="margin-bottom:20px">12 種單字練習模式，將於第 3 階段開放。</p><div class="grid g3">${MODES.map((m,i)=>`<div class="card item">${ic('practice')}<div><b>${m}</b><p class="mute" style="font-size:13px">第 3 階段</p></div></div>`).join('')}</div>`}
+function progress(){const wk=S.week.reduce((a,b)=>a+b,0);return `<h1>進度</h1><p class="mute" style="margin-bottom:20px">學習紀錄會從你的第一次練習開始累積。</p><div class="grid g3" style="margin-bottom:16px"><div class="card stat"><b>${S.words}</b><span>已學單字</span></div><div class="card stat"><b>${wk} 個</b><span>本週新學單字</span></div><div class="card stat"><b>${S.streak} 天</b><span>連續學習</span></div></div><div class="card" style="margin-bottom:16px"><h2>單字狀態</h2>${stH()}</div><div class="card"><h2>圖表與建議</h2><p class="mute">正確率、聽力與文法表現圖表，以及個人化建議，將於第 6 階段加入。</p></div>`}
+function profile(){return `<h1>個人</h1><p class="mute" style="margin-bottom:20px">設定會自動儲存在這個裝置上。</p>
+<div class="card" style="margin-bottom:16px"><div class="top" style="margin:0"><div class="av">${[...S.name][0]||'學'}</div><div><h2 style="margin:0">${esc(S.name)}</h2><span class="badge">${S.level} · ${S.xp} XP</span></div></div></div>
+<div class="card"><h2>設定</h2>
+<div class="field"><label for="nm">使用者名稱</label><input type="text" id="nm" maxlength="12" value="${esc(S.name)}"></div>
+<div class="field"><label for="lv">英文程度</label><select id="lv">${LEVELS.map(l=>`<option ${l===S.level?'selected':''}>${l}</option>`).join('')}</select></div>
+<div class="field"><label for="gl">每日單字目標</label><select id="gl">${[5,10,20,30].map(g=>`<option value="${g}" ${g===S.goal?'selected':''}>${g} 個</option>`).join('')}</select></div>
+<div class="field"><span id="dl">深色模式</span><button class="sw" id="dk" role="switch" aria-labelledby="dl" aria-checked="${isDark()}"></button></div>
+<div class="field"><span>清除學習資料</span><button class="btn ghost" id="rs">重設</button></div></div>`}
+function isDark(){return S.theme?S.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+const CATS={daily:'日常英文',academic:'學術英文',business:'商業英文',toeic:'多益',travel:'旅遊英文',tech:'科技',science:'科學',eng:'工程',mech:'機械工程',auto:'汽車工程'};
+const ST={NEW:'新單字',LEARNING:'學習中',REVIEW:'複習中',MASTERED:'已精熟'};
+/* 欄位：單字|IPA(美式)|詞性|中文|英文定義|例句|中譯|搭配詞;分隔|同義|反義|相關|常見錯誤|級別|分類 */
+const W=[
+'family|/ˈfæməli/|名詞|家人、家庭|A group of people who are related to each other.|My family lives in Taipei.|我的家人住在台北。|a close family;family members;start a family|relatives|stranger|parent;sibling|複數是 families，不是 familys。|A1|daily',
+'breakfast|/ˈbrekfəst/|名詞|早餐|The first meal of the day.|I have breakfast at seven every morning.|我每天早上七點吃早餐。|have breakfast;skip breakfast;a healthy breakfast|morning meal|dinner|lunch;dinner|泛指用餐時不加 a：說 have breakfast，不說 have a breakfast。|A1|daily',
+'airport|/ˈerpɔːrt/|名詞|機場|A place where planes take off and land.|The airport is thirty minutes from the city.|機場離市區三十分鐘車程。|go to the airport;airport security;airport shuttle|airfield|—|flight;passport|介系詞用 at the airport（在機場），不用 in。|A1|travel',
+'borrow|/ˈbɑːroʊ/|動詞|借入|To take something from someone and give it back later.|Can I borrow your pen?|我可以跟你借筆嗎？|borrow money;borrow a book;borrow from a friend|take on loan|lend|lend;return|borrow 是「借入」，lend 是「借出」，常被混用。|A2|daily',
+'ticket|/ˈtɪkɪt/|名詞|票、車票|A piece of paper or a digital code that lets you travel or enter a place.|I bought two train tickets online.|我在網路上買了兩張火車票。|buy a ticket;a one-way ticket;a plane ticket|pass|—|passport;seat|拼字是 ticket，注意中間是 ck。|A2|travel',
+'fuel|/ˈfjuːəl/|名詞|燃料|A substance burned to produce power or heat.|This car uses less fuel than my old one.|這輛車比我的舊車更省油。|fuel tank;fuel consumption;fuel efficiency|gas;petrol|—|engine;gasoline|fuel 為不可數名詞，不說 a fuel 或 fuels（指單一燃料時）。|A2|auto',
+'delay|/dɪˈleɪ/|名詞／動詞|延誤；延遲|A period of time when something is late or postponed.|The flight was delayed by two hours.|班機延誤了兩小時。|a long delay;without delay;delay a decision|postpone|hurry|cancel;postpone|表示「被延誤」用 be delayed，不說 be delay。|A2|travel',
+'schedule|/ˈskedʒuːl/|名詞／動詞|時間表；安排|A plan that lists when things will happen.|My schedule is full this week.|我這週的行程已排滿。|a tight schedule;on schedule;schedule a meeting|timetable;agenda|—|appointment;deadline|美式發音 ch 念 /dʒ/，不是 /ʃ/。|A2|business',
+'recommend|/ˌrekəˈmend/|動詞|推薦；建議|To say that something is good or suitable.|Can you recommend a good restaurant?|你可以推薦一家好餐廳嗎？|highly recommend;recommend doing something|suggest|discourage|suggestion;advice|recommend 後面接動名詞：recommend taking，不說 recommend to take。|B1|daily',
+'improve|/ɪmˈpruːv/|動詞|改善；進步|To become better or make something better.|Reading every day can improve your vocabulary.|每天閱讀可以增進你的字彙量。|improve skills;improve quality;improve a lot|enhance|worsen|improvement;progress|improve 本身已含「更好」，不需再加 better。|B1|daily',
+'maintain|/meɪnˈteɪn/|動詞|維持；保養；維護|To keep something in good condition or continue something.|Regular maintenance helps maintain engine performance.|定期保養有助於維持引擎性能。|maintain a vehicle;maintain equipment;maintain stability|preserve;keep up|neglect|maintenance;repair|名詞是 maintenance，不是 maintainance。|B1|eng',
+'deadline|/ˈdedlaɪn/|名詞|截止日期|The latest time or date by which something must be done.|The deadline for the report is Friday.|報告的截止日是星期五。|meet a deadline;miss a deadline;a tight deadline|due date|—|schedule;submit|「趕上截止日」用 meet a deadline，不用 catch。|B1|business',
+'invoice|/ˈɪnvɔɪs/|名詞|請款單；發票（帳單）|A document that lists goods or services and the money owed.|Please send me the invoice by email.|請用電子郵件把請款單寄給我。|issue an invoice;pay an invoice;an unpaid invoice|bill|—|payment;receipt|invoice 是請款單，收據是 receipt，兩者不同。|B1|toeic',
+'attend|/əˈtend/|動詞|出席；參加|To be present at an event or a meeting.|All staff must attend the meeting.|所有員工都必須出席會議。|attend a meeting;attend a class;attend a conference|participate in|miss|attendance;absent|attend 後面直接接名詞，不加 to：attend the meeting。|B1|toeic',
+'efficient|/ɪˈfɪʃnt/|形容詞|有效率的|Working well without wasting time or energy.|This new engine is more efficient than the old one.|這具新引擎比舊的更有效率。|energy efficient;an efficient system;efficient use of fuel|productive|wasteful|efficiency;effective|efficient（形容詞）與 efficiency（名詞）不要混用。|B1|eng',
+'algorithm|/ˈælɡərɪðəm/|名詞|演算法|A set of steps used to solve a problem or complete a task.|The app uses an algorithm to suggest videos.|這個應用程式用演算法來推薦影片。|a search algorithm;design an algorithm;an algorithm for sorting|procedure|—|data;program|注意拼字 algorithm，不是 algorithum。|B2|tech',
+'sustainable|/səˈsteɪnəbl/|形容詞|永續的；可持續的|Able to continue without harming the environment.|The city is investing in sustainable energy.|這座城市正在投資永續能源。|sustainable development;sustainable energy;a sustainable future|renewable;eco-friendly|unsustainable|sustain;sustainability|名詞是 sustainability，不是 sustainableness。|B2|science',
+'torque|/tɔːrk/|名詞|扭矩|A twisting force that makes something rotate.|The engine produces high torque at low speeds.|這具引擎在低轉速時能產生高扭矩。|peak torque;a torque wrench;engine torque|turning force|—|horsepower;force|que 不念 /kwe/，整字念 /tɔːrk/，與 talk 不同。|B2|auto',
+'tolerance|/ˈtɑːlərəns/|名詞|公差；容忍度|The small amount by which a measurement may differ from the target.|The part must be made within a tolerance of 0.1 mm.|這個零件必須在 0.1 公釐的公差內製造。|within tolerance;tolerance limit;tight tolerance|allowance|intolerance|precision;specification|表示「公差」用 tolerance，不是 error。|B2|mech',
+'ambiguous|/æmˈbɪɡjuəs/|形容詞|模稜兩可的|Having more than one possible meaning.|The wording of the contract is ambiguous.|這份合約的措辭模稜兩可。|an ambiguous statement;deliberately ambiguous;ambiguous wording|unclear;vague|clear|ambiguity;vague|名詞是 ambiguity，不是 ambiguousity。|C1|academic',
+'mitigate|/ˈmɪtɪɡeɪt/|動詞|減輕；緩和|To make something less harmful or serious.|Planting trees can mitigate the effects of heat.|植樹可以減輕高溫的影響。|mitigate risk;mitigate the effects of;mitigate damage|reduce;alleviate|aggravate|mitigation;risk|不要與 militate（對…不利）混淆。|C1|academic',
+'hypothesis|/haɪˈpɑːθəsɪs/|名詞|假設；假說|An idea that is proposed and tested to explain something.|The experiment supports our hypothesis.|這項實驗支持了我們的假說。|test a hypothesis;form a hypothesis;a working hypothesis|theory;assumption|fact|experiment;evidence|複數是 hypotheses，不是 hypothesises。|C1|academic'
+].map(r=>{const a=r.split('|');return{w:a[0],ipa:a[1],pos:a[2],zh:a[3],en:a[4],ex:a[5],exzh:a[6],col:a[7].split(';'),syn:a[8],ant:a[9],rel:a[10],mis:a[11],lv:a[12],cat:a[13]}});
+let L={q:'',lv:'all',cat:'all',fav:false,open:null};
+function vs(w){S.vw=S.vw||{};return S.vw[w]||(S.vw[w]={fav:0,st:'NEW',df:'',first:'',last:'',ok:0,bad:0,iv:0,next:''})}
+function roll(){const d=new Date().toDateString();if(S.rd===d)return;const diff=S.rd?Math.round((new Date(d)-new Date(S.rd))/864e5):0;for(let i=0;i<Math.min(diff,7);i++){S.week.shift();S.week.push(0)}if(diff){S.today=0;S.tasks=S.tasks.map(()=>false)}S.rd=d;if(S.day&&new Date(d)-new Date(S.day)>864e5*1.5)S.streak=0;save()}
+function act(){roll();const d=new Date().toDateString();if(S.day!==d){S.streak+=1;S.day=d}}
+function say(t){if(!('speechSynthesis' in window))return toast('此裝置不支援語音播放');speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
+function filtered(){const q=L.q.trim().toLowerCase();return W.filter(x=>(L.lv==='all'||x.lv===L.lv)&&(L.cat==='all'||x.cat===L.cat)&&(!L.fav||vs(x.w).fav)&&(!q||(x.w+x.zh+x.syn).toLowerCase().includes(q)))}
+function rows(){const l=filtered();return l.length?l.map(x=>`<div class="row"><button class="rb" data-act="open" data-v="${x.w}"><b>${x.w}</b> <span class="mute">${x.ipa}</span><br>${x.zh}</button><span class="badge">${x.lv}</span><button class="ib" data-act="star" data-v="${x.w}" aria-label="收藏 ${x.w}">${vs(x.w).fav?'★':'☆'}</button></div>`).join(''):'<p class="mute" style="padding:12px 0">找不到符合的單字。請換個關鍵字，或清除篩選條件。</p>'}
+function list(){const n=W.filter(x=>vs(x.w).st!=='NEW').length;
+return `<h1>學習</h1><p class="mute">單字資料庫：已學 ${n} / ${W.length} 個。閱讀與寫作將於第 5 階段陸續開放。</p>
+<div class="card" style="margin-top:16px"><input type="search" id="q" placeholder="搜尋英文或中文" value="${esc(L.q)}" aria-label="搜尋單字">
+<div class="chips">${['all',...LEVELS].map(l=>`<button class="chip" data-act="lv" data-v="${l}" aria-pressed="${L.lv===l}">${l==='all'?'全部':l}</button>`).join('')}<button class="chip" data-act="favf" aria-pressed="${L.fav}">★ 收藏</button></div>
+<select id="cat" aria-label="分類" style="max-width:100%"><option value="all">所有分類</option>${Object.entries(CATS).map(([k,v])=>`<option value="${k}" ${L.cat===k?'selected':''}>${v}</option>`).join('')}</select>
+<div id="wl" style="margin-top:10px">${rows()}</div></div>`}
+function sec(t,c){return c?`<div class="sec"><h2>${t}</h2><p>${c}</p></div>`:''}
+function detail(){const x=W.find(v=>v.w===L.open),s=vs(x.w);
+return `<button class="btn ghost" data-act="back">← 返回單字列表</button><div class="card" style="margin-top:16px"><div class="wh"><div><h1 style="margin:0">${x.w}</h1><p class="mute">${x.ipa} · ${x.pos}</p></div><div class="acts"><button class="ib" data-act="say" data-v="${x.w}">播放發音</button><button class="ib" data-act="star" data-v="${x.w}">${s.fav?'★ 已收藏':'☆ 收藏'}</button></div></div>
+<p style="margin-top:8px"><span class="badge">${x.lv}</span> <span class="badge">${CATS[x.cat]}</span> <span class="badge">${ST[s.st]}</span></p>
+${sec('中文意思',x.zh)}${sec('英文定義',x.en)}
+<div class="sec"><h2>例句</h2><p>${x.ex}</p><p class="mute">${x.exzh}</p><button class="chip" style="margin-top:8px" data-act="say" data-v="${esc(x.ex)}">播放例句</button></div>
+${sec('常見搭配',x.col.join('、'))}${sec('同義詞',x.syn.replace(/;/g,'、'))}${sec('反義詞',x.ant)}${sec('相關單字',x.rel.replace(/;/g,'、'))}${sec('常見錯誤',x.mis)}
+<div class="sec"><h2>這個單字對你來說…</h2><div class="acts">${[['easy','簡單'],['mid','中等'],['hard','困難']].map(([k,t])=>`<button class="chip" data-act="df" data-v="${k}" aria-pressed="${s.df===k}">${t}</button>`).join('')}</div></div>
+<div class="sec">${s.st==='NEW'?'<button class="btn" data-act="learn">加入學習（+5 XP）</button>':`<p class="mute">已加入學習，首次學習日：${s.first}。答對 ${s.ok} 次、答錯 ${s.bad} 次。下次複習：${dayfmt(s.next)}（間隔 ${ivT(s.iv||0)}）。</p>`}</div></div>`}
+function learnV(){return tabs()+(L.tab==='g'?gram():L.tab==='l'?listen():L.tab==='k'?speak():L.open?detail():list())}
+function contH(){return S.lastW?`<p class="mute" style="margin-bottom:14px">上次查看：<b>${S.lastW}</b></p><button class="btn" data-act="resume" data-v="${S.lastW}">繼續學習</button>`:'<p class="mute" style="margin-bottom:14px">你還沒有開始任何課程。從學習頁面選擇第一個單字吧。</p><button class="btn" data-go="learn">前往學習</button>'}
+function recH(){return dueH()+recH0()}function recH0(){const r=W.filter(x=>x.lv===S.level&&vs(x.w).st==='NEW').slice(0,3);return r.length?'<p class="mute" style="margin-bottom:10px">依你的 '+S.level+' 程度推薦這些單字：</p>'+r.map(x=>`<button class="btn ghost" style="margin:0 8px 8px 0" data-act="resume" data-v="${x.w}">${x.w}</button>`).join(''):'<p class="mute">這個程度的單字都已學習，可到學習頁面挑戰其他級別。</p>'}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b)return;const a=b.dataset.act,v=b.dataset.v,m=document.getElementById('main');
+if(a==='say')return say(v);
+let top=false;
+if(a==='open'||a==='resume'){L.open=v;S.lastW=v;top=true}
+else if(a==='back'){L.open=null;top=true}
+else if(a==='lv')L.lv=v;
+else if(a==='favf')L.fav=!L.fav;
+else if(a==='star'){const s=vs(v);s.fav=s.fav?0:1}
+else if(a==='df'){vs(L.open).df=v}
+else if(a==='learn'){const s=vs(L.open);if(s.st==='NEW'){act();s.st='LEARNING';s.stp=0;s.iv=6;s.next=Date.now()+216e5;s.first=s.last=new Date().toLocaleDateString('zh-TW');S.words+=1;S.today+=1;S.week[6]+=1;S.xp+=5;if(S.today>=S.goal)S.tasks[0]=true;toast('已加入學習 +5 XP')}}
+save();
+if(route()!=='learn'){location.hash='learn';return}
+m.innerHTML=learnV();if(top)window.scrollTo(0,0)});
+document.addEventListener('input',e=>{if(e.target.id==='q'){L.q=e.target.value;document.getElementById('wl').innerHTML=rows()}});
+document.addEventListener('change',e=>{if(e.target.id==='cat'){L.cat=e.target.value;document.getElementById('wl').innerHTML=rows()}});
+const PM=[['flash','單字卡','翻卡複習，標記難易度'],['mc','選擇題','選出正確的中文意思'],['match','單字配對','把英文和中文配成一組'],['listen','聽力測驗','聽發音，選出單字'],['spell','拼字測驗','聽發音，拼出單字'],['fill','填空題','選出句中缺少的單字'],['build','句子排序','把單字排成通順的句子'],['trans','中翻英','把中文句子翻成英文'],['rtrans','英翻中','選出正確的中文翻譯'],['image','圖片單字','看圖選出單字'],['speed','極速挑戰','60 秒內答越多越好'],['review','每日複習','複習已學過的單字']];
+const EMO={family:'👨‍👩‍👧',breakfast:'🍳',airport:'✈️',ticket:'🎫',fuel:'⛽',schedule:'📅',invoice:'🧾',deadline:'⏰'};
+let P=null,TM=null;
+const sh=a=>[...a].sort(()=>Math.random()-.5),pick=(a,n)=>sh(a).slice(0,n),nrm=s=>s.toLowerCase().replace(/[^a-z0-9 ]/g,' ').split(' ').filter(Boolean);
+const has=x=>(' '+x.ex.toLowerCase().replace(/[^a-z0-9 ]/g,' ')+' ').includes(' '+x.w+' ');
+function opts(x,k,pool){return sh([...pick(pool.filter(y=>y.w!==x.w&&y[k]!==x[k]),3).map(y=>y[k]),x[k]])}
+function mkq(m,x){
+if(m==='mc'||m==='speed'||m==='review'||m==='mistake')return{k:'mc',w:x.w,p:x.w,sub:x.ipa,o:opts(x,'zh',W),a:x.zh,say:x.w};
+if(m==='listen')return{k:'mc',w:x.w,p:'請聽發音，選出單字',o:opts(x,'w',W),a:x.w,say:x.w,auto:1};
+if(m==='spell')return{k:'type',w:x.w,p:'請聽發音，拼出單字',sub:'提示：'+x.zh,a:x.w,say:x.w,auto:1};
+if(m==='fill')return{k:'mc',w:x.w,p:x.ex.split(' ').map(t=>t.toLowerCase().replace(/[^a-z]/g,'')===x.w?'____'+t.replace(/[a-zA-Z]/g,''):t).join(' '),sub:x.exzh,o:opts(x,'w',W),a:x.w};
+if(m==='image')return{k:'mc',w:x.w,p:EMO[x.w],big:1,sub:'這是什麼？',o:opts(x,'w',W.filter(y=>EMO[y.w])),a:x.w};
+if(m==='rtrans')return{k:'mc',w:x.w,p:x.ex,sub:'選出正確的中文翻譯',o:opts(x,'exzh',W),a:x.exzh,say:x.ex};
+if(m==='trans')return{k:'type',w:x.w,p:x.exzh,sub:'請翻成英文（意思相近即可）',a:x.ex,fuzzy:1};
+const t=x.ex.split(' ');return{k:'build',w:x.w,p:x.exzh,sub:'依序點選單字，組成英文句子',a:x.ex,bank:sh(t)}}
+function start(m){clearInterval(TM);
+if(m==='flash'){P={m,d:pick(W,10),i:0,flip:0,tot:10,score:0,xp:0};return}
+if(m==='match'){const d=pick(W,5);P={m,d,r:sh(d.map(x=>x.w)),s:null,got:[],err:[],tot:5,score:0,xp:0};return}
+const pool=m==='review'?due():m==='mistake'?W.filter(x=>S.mist&&S.mist[x.w]):m==='image'?W.filter(x=>EMO[x.w]):m==='fill'?W.filter(has):W;
+if(!pool.length){P={m,empty:1};return}
+const d=m==='speed'?sh(pool):pick(pool,10);
+P={m,qs:d.map(x=>mkq(m,x)),i:0,score:0,xp:0,fb:null,sel:[],t:60,tot:m==='speed'?0:d.length};
+if(m==='speed')TM=setInterval(()=>{P.t--;const e=document.getElementById('tm');if(e)e.textContent=P.t;if(P.t<=0){fin();draw()}},1000)}
+function fin(){if(!P||P.done)return;P.done=1;clearInterval(TM);act();S.tasks[4]=true;if(P.m==='review')S.tasks[1]=true;save()}
+function ans(ok,q,g){const s=vs(q.w);s.last=new Date().toLocaleDateString('zh-TW');if(ok){s.ok++;P.score++;S.xp+=2;P.xp+=2}else{s.bad++;S.mist=S.mist||{};S.mist[q.w]=1}srs(q.w,ok);if(ok&&P.m==='mistake'&&S.mist)delete S.mist[q.w];P.fb={ok,g};if(P.m==='speed')P.tot++;act();save()}
+function nx(){if(!P||P.done)return;P.fb=null;P.sel=[];P.i++;if(P.i>=P.qs.length)fin();draw()}
+function draw(){if(route()!=='practice')return;document.getElementById('main').innerHTML=practiceV();const q=P&&P.qs&&P.qs[P.i];if(q&&q.auto&&!P.fb&&P.said!==P.i&&!P.done){P.said=P.i;say(q.say)}}
+function menu(){return `<h1>練習</h1><p class='mute' style='margin-bottom:20px'>選擇一種練習方式。每答對一題可獲得 2 XP。</p><div class='grid g3'>${PM.map(([k,t,d])=>`<button class='card item' style='text-align:left;color:inherit;font:inherit' data-pa='start' data-v='${k}'>${ic('practice')}<div><b>${t}</b><p class='mute' style='font-size:14px'>${d}</p></div></button>`).join('')}</div>`}
+function summary(){const t=Math.max(1,P.tot);return `<h1>練習完成</h1><div class='card' style='margin-top:16px'><div class='stat'><b>${P.score} / ${P.tot}</b><span>${P.m==='flash'?'已複習單字卡':'答對題數'}</span></div><p class='mute' style='margin:10px 0 16px'>本次獲得 ${P.xp} XP。${P.m==='flash'?'難度標記已儲存。':P.score/t<.6?'答錯的單字已加入錯題清單，之後會安排複習。':'表現很好，繼續保持！'}</p><div class='acts'><button class='btn' data-pa='start' data-v='${P.m}'>再練一次</button><button class='btn ghost' data-pa='exit'>回到練習列表</button></div></div>`}
+function practiceV(){
+if(!P)return MB?mistakes():menu2();
+if(P.empty)return `<button class='btn ghost' data-pa='exit'>← 返回</button><div class='card' style='margin-top:16px'><p>${P.m==='review'?'今天沒有到期的單字，做得好！新加入學習的單字會在 6 小時後排入複習。':P.m==='mistake'?'錯題本是空的，太棒了！':'目前沒有可練習的單字。'}</p></div>`;
+if(P.done)return summary();
+const m=P.m,lab=m==='speed'?`剩餘 <b id='tm'>${P.t}</b> 秒 · 答對 ${P.score}`:m==='match'?`已配對 ${P.got.length} / 5`:m==='flash'?`第 ${P.i+1} / ${P.tot} 張`:`第 ${P.i+1} / ${P.qs.length} 題 · 答對 ${P.score}`;
+const pc=m==='speed'?P.t/60*100:m==='match'?P.got.length*20:P.i/(P.tot||1)*100;
+const top=`<div class='wh'><button class='btn ghost' data-pa='exit'>← 離開</button><span class='mute'>${lab}</span></div><div class='bar'><div style='width:${pc}%'></div></div>`;
+if(m==='flash'){const x=P.d[P.i];return top+`<div class='card' style='margin-top:16px;text-align:center'><div style='font-size:34px;font-weight:700'>${x.w}</div><p class='mute'>${x.ipa}</p><button class='chip' data-pa='say' data-v='${x.w}'>播放發音</button>${P.flip?`<p style='font-size:22px;margin-top:14px'>${x.zh}</p><p class='mute'>${x.ex}<br>${x.exzh}</p><p style='margin:12px 0 8px'>這個單字對你來說…</p><div class='acts' style='justify-content:center'>${[['easy','簡單'],['mid','中等'],['hard','困難']].map(([k,t])=>`<button class='btn ghost' data-pa='df' data-v='${k}'>${t}</button>`).join('')}</div>`:`<div style='margin-top:14px'><button class='btn' data-pa='flip'>顯示答案</button></div>`}</div>`}
+if(m==='match'){const g=w=>P.got.includes(w);return top+`<div class='grid' style='grid-template-columns:1fr 1fr;margin-top:16px'><div class='grid'>${P.d.map(x=>`<button class='chip opt ${g(x.w)?'ok':''}' data-pa='mL' data-v='${x.w}' aria-pressed='${P.s===x.w}' ${g(x.w)?'disabled':''}>${x.w}</button>`).join('')}</div><div class='grid'>${P.r.map(w=>`<button class='chip opt ${g(w)?'ok':''}' data-pa='mR' data-v='${w}' ${g(w)?'disabled':''}>${W.find(y=>y.w===w).zh}</button>`).join('')}</div></div><p class='mute' style='margin-top:10px'>先點左邊的英文，再點右邊對應的中文。</p>`}
+const q=P.qs[P.i],fb=P.fb;let body='';
+if(q.k==='mc')body=`<div class='grid' style='margin-top:14px'>${q.o.map((o,j)=>`<button class='chip opt ${fb?(o===q.a?'ok':o===fb.g?'no':''):''}' data-pa='opt' data-v='${j}' ${fb?'disabled':''}>${esc(o)}</button>`).join('')}</div>`;
+if(q.k==='type')body=`<input type='text' id='ti' autocomplete='off' autocapitalize='none' spellcheck='false' style='max-width:100%;width:100%;margin-top:14px' value='${fb?esc(fb.g):''}' ${fb?'disabled':''} aria-label='輸入答案'>${fb?'':`<button class='btn' style='margin-top:12px' data-pa='submit'>檢查答案</button>`}`;
+if(q.k==='build')body=`<div class='card' style='margin-top:14px;min-height:60px;display:flex;gap:8px;flex-wrap:wrap'>${P.sel.map((b,k)=>`<button class='chip' data-pa='undo' data-v='${k}' ${fb?'disabled':''}>${esc(q.bank[b])}</button>`).join('')||`<span class='mute'>點下方單字開始排列</span>`}</div><div class='acts' style='margin-top:12px'>${q.bank.map((t,k)=>P.sel.includes(k)?'':`<button class='chip' data-pa='tok' data-v='${k}' ${fb?'disabled':''}>${esc(t)}</button>`).join('')}</div>${!fb&&P.sel.length===q.bank.length?`<button class='btn' style='margin-top:12px' data-pa='submit'>檢查答案</button>`:''}`;
+let f='';if(fb&&m!=='speed'){const x=W.find(y=>y.w===q.w);f=`<div class='card' style='margin-top:12px;border-color:${fb.ok?'var(--ok)':'var(--err)'}'><b>${fb.ok?'答對了！':'答錯了'}</b><p>正確答案：${esc(q.a)}</p><p class='mute'>${x.w}：${x.zh}。${fb.ok?'':x.mis}</p><button class='btn' style='margin-top:10px' data-pa='next'>${P.i+1>=P.qs.length?'查看結果':'下一題'}</button></div>`}
+return top+`<div class='card' style='margin-top:16px'><div style='font-size:${q.big?64:q.p.length>24?20:28}px;font-weight:700;line-height:1.4'>${q.p}</div><p class='mute'>${q.sub||''}</p>${q.say?`<button class='chip' data-pa='say' data-v='${esc(q.say)}'>播放發音</button>`:''}${body}</div>`+f}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-pa]');if(!b)return;const a=b.dataset.pa,v=b.dataset.v;
+if(a==='say')return say(v);
+if(a==='start'){start(v);return draw()}
+if(a==='exit'){clearInterval(TM);P=null;return draw()}
+if(a==='mb'){MB=true;return draw()}if(a==='mb0'){MB=false;return draw()}if(a==='rm'){delete S.mist[v];save();return draw()}
+if(!P||P.done)return;
+const q=P.qs&&P.qs[P.i];
+if(a==='flip')P.flip=1;
+else if(a==='df'){vs(P.d[P.i].w).df=v;P.score++;P.xp++;S.xp++;P.i++;P.flip=0;act();save();if(P.i>=P.tot)fin()}
+else if(a==='opt'&&!P.fb){ans(q.o[+v]===q.a,q,q.o[+v]);if(P.m==='speed'){draw();setTimeout(nx,500);return}}
+else if(a==='next')return nx();
+else if(a==='submit'&&!P.fb){if(q.k==='build'){const g=P.sel.map(i=>q.bank[i]).join(' ');ans(g===q.a,q,g)}else{const g=document.getElementById('ti').value,u=nrm(g),t=nrm(q.a);const ok=q.fuzzy?(t.filter(w=>u.includes(w)).length/t.length>=.75&&u.length<=t.length+2):u.join(' ')===t.join(' ');ans(ok,q,g)}}
+else if(a==='tok'&&!P.fb)P.sel.push(+v);
+else if(a==='undo'&&!P.fb)P.sel.splice(+v,1);
+else if(a==='mL')P.s=v;
+else if(a==='mR'&&P.s){const s=vs(P.s);if(P.s===v){if(!P.err.includes(v)){s.ok++;S.xp+=2;P.xp+=2;P.score++;srs(v,true)}P.got.push(v);act();if(P.got.length>=5)fin()}else{if(!P.err.includes(P.s)){P.err.push(P.s);s.bad++;S.mist=S.mist||{};S.mist[P.s]=1;srs(P.s,false)}toast('再試一次')}P.s=null;save()}
+draw()});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='ti'){const s=document.querySelector('[data-pa=submit]');if(s)s.click()}});
+const STEPS=[6,24,72,168,336,720];let MB=false;
+const dayfmt=t=>t?new Date(t).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}):'—';
+const ivT=h=>h<24?(Math.round(h*10)/10)+' 小時':Math.round(h/24)+' 天';
+const due=()=>W.filter(x=>{const s=vs(x.w);return s.st!=='NEW'&&(s.next||0)<=Date.now()});
+function srs(w,ok){const s=vs(w);if(s.st==='NEW')return;s.stp=s.stp||0;
+if(ok){if(s.stp>=5&&s.st==='REVIEW')s.st='MASTERED';else s.stp=Math.min(5,s.stp+1)}else s.stp=Math.max(0,s.stp-2);
+const t=s.ok+s.bad,acc=t?s.ok/t:1,f=(acc>.9?1.2:acc<.6?.7:1)*(s.df==='easy'?1.25:s.df==='hard'?.8:1);
+const h=ok?STEPS[s.stp]*f:1;s.iv=Math.round(h*10)/10;s.next=Date.now()+h*36e5;
+if(s.st!=='MASTERED')s.st=s.stp>=3?'REVIEW':'LEARNING';else if(!ok)s.st='REVIEW'}
+function menu2(){const d=due().length,m=Object.keys(S.mist||{}).length,n=W.filter(x=>vs(x.w).st!=='NEW').length;
+return `<h1>練習</h1><div class='grid g2' style='grid-template-columns:1fr 1fr;margin:16px 0'><div class='card stat'><h2>今日待複習</h2><b>${d}</b><p class='mute' style='margin:4px 0 12px'>已學 ${n} 個單字，依你的表現自動排程。</p><button class='btn' data-pa='start' data-v='review'>開始複習</button></div><div class='card stat'><h2>錯題本</h2><b>${m}</b><p class='mute' style='margin:4px 0 12px'>答錯的單字會集中在這裡。</p><button class='btn ghost' data-pa='mb'>查看錯題</button></div></div><h2>全部練習模式</h2><div class='grid g3'>${PM.map(([k,t,d])=>`<button class='card item' style='text-align:left;color:inherit;font:inherit' data-pa='start' data-v='${k}'>${ic('practice')}<div><b>${t}</b><p class='mute' style='font-size:14px'>${d}</p></div></button>`).join('')}</div>`}
+function mistakes(){const l=W.filter(x=>S.mist&&S.mist[x.w]);
+return `<div class='wh'><button class='btn ghost' data-pa='mb0'>← 返回</button>${l.length?`<button class='btn' data-pa='start' data-v='mistake'>練習錯題</button>`:''}</div><h1 style='margin-top:16px'>錯題本</h1>`+(l.length?l.map(x=>{const s=vs(x.w);return `<div class='card' style='margin-top:12px'><div class='wh'><div><b style='font-size:20px'>${x.w}</b> <span class='mute'>${x.ipa}</span><p>${x.zh}</p></div><button class='ib' data-pa='say' data-v='${x.w}'>播放</button></div><p class='mute' style='font-size:14px'>答錯 ${s.bad} 次 · 下次複習：${dayfmt(s.next)}</p><p style='font-size:14px'>提醒：${x.mis}</p><button class='chip' style='margin-top:8px' data-pa='rm' data-v='${x.w}'>我記住了，移除</button></div>`}).join(''):`<div class='card' style='margin-top:12px'><p>錯題本是空的。答錯的單字會自動記錄在這裡。</p></div>`)}
+function dueH(){const d=due().length;return d?`<p style='margin-bottom:10px'>有 <b>${d}</b> 個單字待複習。</p><button class='btn' style='margin-bottom:12px' data-go='practice'>前往複習</button>`:''}
+function stH(){return Object.keys(ST).map(k=>`${ST[k]} ${W.filter(x=>vs(x.w).st===k).length}`).join('　·　')+`<p class='mute' style='margin-top:8px'>錯題本：${Object.keys(S.mist||{}).length} 個單字</p>`}
+const Q=(q,o,a,e)=>({q,o,a,e});let G={id:null,pa:{},qz:0,qa:[]};
+const GL=[['初級 Beginner',[['名詞 Nouns'],['代名詞 Pronouns'],['動詞 Verbs'],['形容詞 Adjectives'],['副詞 Adverbs'],['冠詞 Articles','art'],['介系詞 Prepositions'],['現在簡單式 Present Simple','ps'],['現在進行式 Present Continuous'],['過去簡單式 Past Simple','pa'],['未來式 Future Tense']]],['中級 Intermediate',[['現在完成式 Present Perfect','pp'],['過去完成式 Past Perfect'],['被動語態 Passive Voice','pv'],['條件句 Conditional Sentences'],['關係子句 Relative Clauses'],['動名詞 Gerunds'],['不定詞 Infinitives'],['情態動詞 Modal Verbs']]],['進階 Advanced',[['倒裝句 Inversion'],['虛擬語氣 Subjunctive Mood'],['複合句 Complex Sentences'],['進階子句 Advanced Clauses'],['進階句型 Advanced Sentence Structures']]]];
+const GD={
+ps:{t:'現在簡單式 Present Simple',o:['用現在簡單式描述習慣、日常與事實','正確使用第三人稱單數的 -s／-es'],e:'用來說習慣、日常行程與事實。主詞是 he／she／it 或單數名詞時，動詞要加 -s 或 -es；否定與疑問句改用 do／does 加原形動詞。',x:[['I drink coffee every morning.','我每天早上喝咖啡。'],['She works in a hospital.','她在醫院工作。'],['Does he like tea?','他喜歡茶嗎？']],m:[['He work here.','He works here.'],['Does she works?','Does she work?']],
+p:[Q('She ___ to school by bus.',['go','goes','going'],1,'主詞是 she，動詞要加 -es：goes。'),Q('He ___ not like spicy food.',['do','does','is'],1,'第三人稱單數的否定用 does not。'),Q('___ you play the piano?',['Do','Does','Are'],0,'主詞是 you，疑問句用 Do。')],
+z:[Q('My brother ___ at a bank.',['work','works','working'],1,'主詞是單數 my brother，動詞加 -s。'),Q('They ___ TV in the evening.',['watches','watch','watching'],1,'主詞 they 是複數，用原形動詞 watch。'),Q('___ she live near here?',['Do','Does','Is'],1,'主詞是 she，疑問句用 Does，後面動詞用原形。')]},
+pa:{t:'過去簡單式 Past Simple',o:['描述已經結束的過去動作','記住規則與不規則動詞的過去式'],e:'用來說過去已經結束的動作或狀態。規則動詞加 -ed；不規則動詞要記變化（go → went）。否定與疑問句用 did 加原形動詞，這時動詞不再變化。',x:[['I visited my grandmother yesterday.','我昨天去探望奶奶。'],['We went to Tainan last year.','我們去年去了台南。'],['Did you finish the report?','你完成報告了嗎？']],m:[['I goed home.','I went home.'],['Did you went there?','Did you go there?']],
+p:[Q('Yesterday I ___ a new phone.',['buy','bought','buyed'],1,'buy 是不規則動詞，過去式是 bought。'),Q('She ___ not come to the party.',['did','does','was'],0,'過去式的否定用 did not，後面接原形。'),Q('___ they arrive on time?',['Did','Do','Were'],0,'過去式的疑問句用 Did。')],
+z:[Q('We ___ dinner at seven last night.',['have','had','has'],1,'have 的過去式是 had。'),Q('Did he ___ you?',['call','called','calling'],0,'有 did 時，動詞回到原形 call。'),Q('I ___ the movie, but it was boring.',['see','saw','seen'],1,'see 的過去式是 saw；seen 是過去分詞。')]},
+art:{t:'冠詞 Articles',o:['分辨 a、an、the 的用法','依發音決定用 a 或 an'],e:'第一次提到的單數可數名詞用 a／an；an 用在「母音發音」開頭的字前面。雙方都知道指哪一個時用 the。泛指的複數或不可數名詞通常不加冠詞。',x:[['I need a pen.','我需要一支筆。'],['She is an engineer.','她是工程師。'],['Please close the door.','請把門關上。']],m:[['She is engineer.','She is an engineer.'],['I have an university degree.','I have a university degree.（university 以 /j/ 子音開頭）']],
+p:[Q('He bought ___ umbrella.',['a','an','the'],1,'umbrella 以母音發音開頭，用 an。'),Q('___ sun rises in the east.',['A','An','The'],2,'世界上獨一無二的事物用 the。'),Q('He works at ___ university.',['a','an','the'],0,'university 以 /j/ 子音發音開頭，用 a。')],
+z:[Q('I saw ___ movie last night. It was great.',['a','an','the'],0,'第一次提到某部電影，用 a。'),Q('It takes ___ hour to get there.',['a','an','the'],1,'hour 的 h 不發音，以母音開頭，用 an。'),Q('Could you pass me ___ salt?',['a','an','the'],2,'雙方都知道是桌上那罐鹽，用 the。')]},
+pp:{t:'現在完成式 Present Perfect',o:['用 have／has 加過去分詞說明與現在有關的經驗','分辨現在完成式與過去簡單式'],e:'結構是 have／has + 過去分詞。用來談經驗、剛完成的事，或從過去持續到現在的狀態。不能和 yesterday、last year 這類明確的過去時間連用，那種情況要用過去簡單式。',x:[['I have visited Japan twice.','我去過日本兩次。'],['She has just finished her homework.','她剛寫完功課。'],['We have lived here since 2020.','我們從 2020 年起就住在這裡。']],m:[['I have seen him yesterday.','I saw him yesterday.'],['He has went home.','He has gone home.']],
+p:[Q('I ___ this movie three times.',['see','saw','have seen'],2,'談到目前為止的經驗，用 have seen。'),Q('She ___ here since May.',['works','has worked','worked'],1,'since 表示從過去持續到現在，用現在完成式。'),Q('___ you ever eaten sushi?',['Did','Have','Are'],1,'問經驗用 Have you ever + 過去分詞。')],
+z:[Q('He ___ lost his keys.',['has','have','had'],0,'主詞 he 搭配 has。'),Q('We ___ to Paris last summer.',['have gone','went','have been'],1,'last summer 是明確的過去時間，用過去簡單式。'),Q('They have ___ the project already.',['finish','finished','finishing'],1,'have 後面要接過去分詞 finished。')]},
+pv:{t:'被動語態 Passive Voice',o:['用 be 加過去分詞組成被動句','知道什麼時候適合用被動語態'],e:'結構是 be + 過去分詞。當重點是「承受動作的人事物」，或不知道、不需要說是誰做的時，用被動語態。要說明執行者時可加 by。時態變化在 be 動詞上。',x:[['The car is repaired every year.','這輛車每年都會維修。'],['The bridge was built in 1990.','這座橋建於 1990 年。'],['The report will be sent tomorrow.','報告明天會寄出。']],m:[['The window broke by the boy.','The window was broken by the boy.'],['The email sent yesterday.','The email was sent yesterday.']],
+p:[Q('English ___ in many countries.',['speaks','is spoken','is speaking'],1,'英語是「被說」，用 is spoken。'),Q('The email ___ yesterday.',['sent','was sent','is sent'],1,'yesterday 是過去，用 was sent。'),Q('The engine ___ by a technician.',['was repaired','repaired','has repair'],0,'引擎是被修理的一方，用 was repaired。')],
+z:[Q('The new model ___ next month.',['will launch','will be launched','launching'],1,'產品是被推出的一方，用 will be launched。'),Q('These parts ___ in Taiwan.',['make','are made','making'],1,'零件是被製造的，用 are made。'),Q('The windows ___ last week.',['were cleaned','cleaned','are cleaned'],0,'last week 是過去，windows 是複數：were cleaned。')]}};
+function tabs(){return `<div class='chips' style='margin-top:0'><button class='chip' data-gr='tab' data-v='v' aria-pressed='${L.tab!=='g'&&L.tab!=='l'&&L.tab!=='k'}'>單字</button><button class='chip' data-gr='tab' data-v='g' aria-pressed='${L.tab==='g'}'>文法</button><button class='chip' data-gr='tab' data-v='l' aria-pressed='${L.tab==='l'}'>聽力</button><button class='chip' data-gr='tab' data-v='k' aria-pressed='${L.tab==='k'}'>口說</button></div>`}
+function gram(){if(!G.id)return `<h1>文法課程</h1><p class='mute'>每堂課包含說明、例句、常見錯誤、練習題與單元測驗。目前開放 5 堂，其餘陸續推出。</p>`+GL.map(([lv,a])=>`<h2 style='margin-top:20px'>${lv}</h2><div class='card'>${a.map(([t,id])=>{const r=S.gr&&S.gr[id];return id?`<button class='row rowb' data-gr='open' data-v='${id}'><span class='rb'><b>${t}</b></span><span class='badge'>${r&&r.done?'已完成':'開始學習'}</span></button>`:`<button class='row rowb soon' data-gr='soon'><span class='rb'>${t}</span><span style='font-size:13px'>即將推出</span></button>`}).join('')}</div>`).join('');
+const d=GD[G.id];if(G.qz)return quizV(d);
+return `<button class='btn ghost' data-gr='back'>← 返回課程列表</button><div class='card' style='margin-top:16px'><h1>${d.t}</h1>${sec('學習目標',d.o.map(x=>'・'+x).join('<br>'))}${sec('說明',d.e)}<div class='sec'><h2>例句</h2>${d.x.map(([a,b])=>`<p>${a} <button class='chip' data-gr='say' data-v='${esc(a)}'>播放</button></p><p class='mute' style='margin-bottom:6px'>${b}</p>`).join('')}</div><div class='sec'><h2>常見錯誤</h2>${d.m.map(([a,b])=>`<p>✗ ${a}<br>✓ ${b}</p>`).join('<br>')}</div></div><div class='card' style='margin-top:16px'><h2>練習題</h2>${d.p.map((q,i)=>qv(q,i,G.pa[i],'pick',1)).join('')}</div><button class='btn' style='margin-top:16px' data-gr='quiz'>開始單元測驗</button>`}
+function qv(q,i,sel,act,fb){const sh2=fb&&sel!=null;return `<div class='sec'><p><b>${i+1}. ${q.q}</b></p><div class='acts' style='margin-top:6px'>${q.o.map((o,j)=>`<button class='chip ${sh2?(j===q.a?'opt ok':j===sel?'opt no':''):''}' data-gr='${act}' data-v='${i}:${j}' aria-pressed='${!fb&&sel===j}' ${sh2?'disabled':''}>${o}</button>`).join('')}</div>${sh2?`<p class='mute' style='margin-top:6px'>${sel===q.a?'答對了！':'答錯了。'}${q.e}</p>`:''}</div>`}
+function quizV(d){const done=G.qz===2,n=G.qa.filter(x=>x!=null).length;return `<button class='btn ghost' data-gr='lesson'>← 返回課程</button><div class='card' style='margin-top:16px'><h1>單元測驗</h1><p class='mute'>${d.t}</p>${d.z.map((q,i)=>qv(q,i,G.qa[i],'qp',done)).join('')}${done?`<div class='sec'><h2>結果</h2><p><b>${G.sc} / ${d.z.length}</b>　${G.sc>=2?'通過！':'再試一次吧。'}本次獲得 ${G.gx} XP。</p><div class='acts' style='margin-top:8px'><button class='btn' data-gr='quiz'>重新測驗</button><button class='btn ghost' data-gr='back'>回到課程列表</button></div></div>`:n===d.z.length?`<button class='btn' style='margin-top:14px' data-gr='submit'>提交答案</button>`:`<p class='mute' style='margin-top:14px'>請回答所有題目後提交。</p>`}</div>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-gr]');if(!b)return;const a=b.dataset.gr,v=b.dataset.v;
+if(a==='say')return say(v);
+if(a==='soon')return toast('這堂課尚未推出，敬請期待');
+if(a==='tab'){L.tab=v;G.id=null;if(K.rec)recStop()}
+else if(a==='open'){G.id=v;G.pa={};G.qz=0}
+else if(a==='back'){G.id=null;G.qz=0}
+else if(a==='lesson')G.qz=0;
+else if(a==='quiz'){G.qz=1;G.qa=[]}
+else if(a==='pick'){const[i,j]=v.split(':');if(G.pa[i]==null)G.pa[i]=+j}
+else if(a==='qp'&&G.qz===1){const[i,j]=v.split(':');G.qa[i]=+j}
+else if(a==='submit'){const d=GD[G.id];G.sc=d.z.filter((q,i)=>G.qa[i]===q.a).length;S.gr=S.gr||{};const r=S.gr[G.id]||(S.gr[G.id]={done:0,best:0});let x=0;if(G.sc>r.best){x=(G.sc-r.best)*2;r.best=G.sc}if(G.sc>=2&&!r.done){r.done=1;x+=10}S.xp+=x;G.gx=x;S.tasks[3]=true;act();save();G.qz=2}
+if(route()==='learn'){document.getElementById('main').innerHTML=learnV();if(['open','back','tab','lesson','quiz'].includes(a))window.scrollTo(0,0)}});
+let T={id:null,sp:.8,sub:true,idx:-1,qz:0,qa:[],run:0};
+const LL=[['初級 Beginner',[['字母 Alphabet'],['數字 Numbers'],['基礎單字 Basic Vocabulary'],['問候 Greetings','greet']]],['基礎 Elementary',[['日常對話 Daily Conversations'],['購物 Shopping'],['餐廳 Restaurants','rest'],['交通 Transportation']]],['中級 Intermediate',[['短篇故事 Short Stories'],['訪談 Interviews'],['新聞 News','news'],['日常對話 Daily Conversations']]],['進階 Advanced',[['學術講座 Academic Lectures'],['商業會議 Business Meetings'],['技術討論 Technical Discussions','tech']]]];
+const LD={
+greet:{t:'Meeting a New Classmate 認識新同學',c:'初級 · 問候',l:[['Hello! My name is Anna.','你好！我叫安娜。'],['Hi, Anna. I’m Tom. Nice to meet you.','嗨，安娜。我是湯姆。很高興認識你。'],['Nice to meet you, too. Where are you from?','我也很高興認識你。你來自哪裡？'],['I’m from Taiwan. How about you?','我來自台灣。你呢？'],['I’m from Canada.','我來自加拿大。'],['Great! See you in class.','太好了！課堂上見。']],z:[Q('安娜來自哪裡？',['加拿大','台灣','美國'],0,'安娜說 I’m from Canada，所以是加拿大。'),Q('湯姆來自哪裡？',['日本','台灣','加拿大'],1,'湯姆說 I’m from Taiwan。'),Q('他們接下來會在哪裡見面？',['在課堂上','在餐廳','在機場'],0,'最後一句 See you in class 表示課堂上見。')]},
+rest:{t:'Ordering Lunch 點午餐',c:'基礎 · 餐廳',l:[['Good afternoon. Are you ready to order?','午安。你們準備好點餐了嗎？'],['Yes. I’d like a chicken sandwich, please.','好的，我想要一份雞肉三明治。'],['Would you like something to drink?','要喝點什麼嗎？'],['Orange juice, please.','請給我柳橙汁。'],['Anything else?','還需要別的嗎？'],['No, that’s all. Thank you.','不用了，這樣就好。謝謝。']],z:[Q('客人點了什麼主餐？',['雞肉三明治','沙拉','牛排'],0,'客人說 a chicken sandwich。'),Q('客人點了什麼飲料？',['咖啡','柳橙汁','水'],1,'客人說 Orange juice。'),Q('客人還需要別的東西嗎？',['要甜點','要再一杯飲料','不需要'],2,'That’s all 表示就這些，不需要別的。')]},
+news:{t:'Train Delay 火車延誤',c:'中級 · 新聞',l:[['Good evening. Train services in the north were delayed today because of heavy rain.','晚安。由於大雨，今天北部的火車班次出現延誤。'],['Some trains were delayed by more than an hour.','部分列車延誤超過一小時。'],['The railway company said it will add extra trains tomorrow morning.','鐵路公司表示明天早上會加開班次。'],['Passengers are advised to check the schedule before leaving home.','建議乘客出門前先查看時刻表。']],z:[Q('火車為什麼延誤？',['大雨','設備故障','罷工'],0,'新聞說 because of heavy rain。'),Q('部分列車延誤多久？',['十分鐘','超過一小時','半天'],1,'新聞說 more than an hour。'),Q('鐵路公司明天會怎麼做？',['停駛','調漲票價','加開班次'],2,'公司表示 add extra trains。')]},
+tech:{t:'Engine Maintenance Meeting 引擎保養會議',c:'進階 · 技術討論',l:[['Our latest inspection shows that the engine oil needs to be changed more frequently.','最近的檢查顯示，引擎機油需要更頻繁地更換。'],['If we neglect regular maintenance, the risk of overheating increases significantly.','如果疏於定期保養，過熱的風險會大幅增加。'],['Therefore, I recommend replacing the oil filter every ten thousand kilometers.','因此我建議每一萬公里更換一次機油濾清器。'],['That would improve efficiency and extend the engine’s service life.','這樣可以提升效率並延長引擎的使用壽命。']],z:[Q('檢查發現了什麼？',['機油需要更頻繁更換','輪胎嚴重磨損','電池沒電'],0,'第一句說 engine oil needs to be changed more frequently。'),Q('疏於保養會增加什麼風險？',['噪音','過熱','漏水'],1,'第二句說 risk of overheating increases。'),Q('建議多久更換一次機油濾清器？',['每一千公里','每年一次','每一萬公里'],2,'第三句說 every ten thousand kilometers。')]}};
+const stop=()=>{T.run++;if('speechSynthesis' in window)speechSynthesis.cancel();T.idx=-1};
+function spk(t,cb){if(!('speechSynthesis' in window)){toast('此裝置不支援語音播放');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=T.sp;if(cb)u.onend=cb;speechSynthesis.speak(u)}
+function rl(){if(route()==='learn'&&L.tab==='l')document.getElementById('main').innerHTML=learnV()}
+function playAll(){const d=LD[T.id],r=++T.run;speechSynthesis&&speechSynthesis.cancel();(function n(k){if(r!==T.run)return;if(k>=d.l.length){T.idx=-1;rl();return}T.idx=k;rl();spk(d.l[k][0],()=>n(k+1))})(0)}
+function listen(){if(!T.id)return `<h1>聽力中心</h1><p class='mute'>聽英文、對照字幕，再回答理解問題。目前開放 4 個單元，其餘陸續推出。</p>`+LL.map(([lv,a])=>`<h2 style='margin-top:20px'>${lv}</h2><div class='card'>${a.map(([t,id])=>{const r=S.ls&&S.ls[id];return id?`<button class='row rowb' data-gr='lopen' data-v='${id}'><span class='rb'><b>${t}</b><br><span class='mute' style='font-size:14px'>${LD[id].t}</span></span><span class='badge'>${r&&r.done?'已完成':'開始聆聽'}</span></button>`:`<button class='row rowb soon' data-gr='lsoon'><span class='rb'>${t}</span><span style='font-size:13px'>即將推出</span></button>`}).join('')}</div>`).join('');
+const d=LD[T.id];if(T.qz)return lquiz(d);
+return `<button class='btn ghost' data-gr='lback'>← 返回聽力列表</button><div class='card' style='margin-top:16px'><h1 style='font-size:22px'>${d.t}</h1><p class='mute'>${d.c}</p><div class='acts' style='margin:14px 0'><button class='btn' data-gr='lplay'>播放全部</button><button class='btn ghost' data-gr='lstep'>逐句播放（下一句）</button><button class='btn ghost' data-gr='lstop'>停止</button></div><div class='acts'>${[[.6,'慢速'],[.8,'中速'],[1,'正常']].map(([s,t])=>`<button class='chip' data-gr='lspeed' data-v='${s}' aria-pressed='${T.sp===s}'>${t}</button>`).join('')}<button class='chip' data-gr='lsub' aria-pressed='${T.sub}'>${T.sub?'隱藏字幕':'顯示字幕'}</button></div></div><div class='card' style='margin-top:16px'>${d.l.map(([en,zh],i)=>`<div class='row' style='${T.idx===i?'background:var(--sky);border-radius:10px;padding:0 8px':''}'><div class='rb'>${T.sub?`${en}<br><span class='mute' style='font-size:14px'>${zh}</span>`:`<span class='mute'>第 ${i+1} 句</span>`}</div><button class='ib' data-gr='lline' data-v='${i}' aria-label='重播第 ${i+1} 句'>重播</button></div>`).join('')}</div><button class='btn' style='margin-top:16px' data-gr='lquiz'>開始理解測驗</button>`}
+function lquiz(d){const done=T.qz===2,n=T.qa.filter(x=>x!=null).length;return `<button class='btn ghost' data-gr='llesson'>← 返回單元</button><div class='card' style='margin-top:16px'><h1>理解測驗</h1><p class='mute'>${d.t}</p>${d.z.map((q,i)=>qv(q,i,T.qa[i],'lq',done)).join('')}${done?`<div class='sec'><h2>結果</h2><p><b>${T.sc} / ${d.z.length}</b>　${T.sc>=2?'通過！':'再聽一次再試試吧。'}本次獲得 ${T.gx} XP。</p><div class='acts' style='margin-top:8px'><button class='btn' data-gr='lquiz'>重新測驗</button><button class='btn ghost' data-gr='lback'>回到聽力列表</button></div></div>`:n===d.z.length?`<button class='btn' style='margin-top:14px' data-gr='lsubmit'>提交答案</button>`:`<p class='mute' style='margin-top:14px'>請回答所有題目後提交。</p>`}</div>`}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-gr]');if(!b)return;const a=b.dataset.gr,v=b.dataset.v;if(a[0]!=='l')return;
+if(a==='lsoon')return toast('這個單元尚未推出，敬請期待');
+if(a==='lopen'){stop();T.id=v;T.qz=0}
+else if(a==='lback'){stop();T.id=null;T.qz=0}
+else if(a==='llesson'){T.qz=0}
+else if(a==='lplay')return playAll();
+else if(a==='lstop')stop();
+else if(a==='lline'){stop();const r=T.run;T.idx=+v;spk(LD[T.id].l[+v][0],()=>{if(r===T.run){T.idx=-1;rl()}})}
+else if(a==='lstep'){const n=T.idx+1>=LD[T.id].l.length?0:T.idx+1;stop();T.idx=n;spk(LD[T.id].l[n][0])}
+else if(a==='lspeed')T.sp=+v;
+else if(a==='lsub')T.sub=!T.sub;
+else if(a==='lquiz'){stop();T.qz=1;T.qa=[]}
+else if(a==='lq'&&T.qz===1){const[i,j]=v.split(':');T.qa[i]=+j}
+else if(a==='lsubmit'){const d=LD[T.id];T.sc=d.z.filter((q,i)=>T.qa[i]===q.a).length;S.ls=S.ls||{};const r=S.ls[T.id]||(S.ls[T.id]={done:0,best:0});let x=0;if(T.sc>r.best){x=(T.sc-r.best)*2;r.best=T.sc}if(T.sc>=2&&!r.done){r.done=1;x+=10}S.xp+=x;T.gx=x;S.tasks[2]=true;act();save();T.qz=2}
+rl();if(['lopen','lback','llesson','lquiz'].includes(a))window.scrollTo(0,0)});
+let K={m:null,i:0,tx:'',res:null,rec:false,url:null,cv:null,st:0,hint:false,err:0};
+const SRC=window.SpeechRecognition||window.webkitSpeechRecognition;
+const EX=[['請用英文和人打招呼','Hello! Nice to meet you.'],['詢問對方來自哪裡','Where are you from?'],['說出你的早餐習慣','I have breakfast at seven every morning.'],['有禮貌地點一杯飲料','I’d like an orange juice, please.'],['請對方推薦餐廳','Can you recommend a good restaurant?'],['說明你的行程很滿','My schedule is full this week.']];
+function tgt(){if(K.m==='w'){const x=W[K.i];return{en:x.w,zh:x.zh,ipa:x.ipa,key:'w:'+x.w}}if(K.m==='s'){const x=W[K.i];return{en:x.ex,zh:x.exzh,key:'s:'+x.w}}if(K.m==='x'){const e=EX[K.i];return{en:e[1],zh:e[0],key:'x:'+K.i}}const l=LD[K.cv].l[K.st];return{en:l[0],zh:l[1],key:'c:'+K.cv+':'+K.st}}
+function kreset(){K.tx='';K.res=null;K.url=null;K.err=0;K.hint=false}
+function ks(){if(route()==='learn'&&L.tab==='k')document.getElementById('main').innerHTML=learnV()}
+function spkR(t,r){const o=T.sp;T.sp=r;spk(t);T.sp=o}
+function kev(){const t=nrm(tgt().en),u=nrm(K.tx),miss=[...new Set(t.filter(w=>!u.includes(w)))];return{pct:Math.round((t.length-t.filter(w=>!u.includes(w)).length)/t.length*100),miss}}
+function kfb(r){return r.pct>=90?'辨識結果和目標幾乎一致，做得很好！再試著用自然的語速和語調說一次。':r.pct>=60?`大部分的單字都被辨識出來了。請特別注意：${r.miss.join('、')}。先慢速聆聽示範，再模仿一次。`:'辨識結果和目標差異較大。先用慢速聆聽示範，逐字模仿，並確認麥克風靠近嘴巴、環境安靜。'}
+async function recStart(){if(K.rec)return;kreset();
+try{if(!(navigator.mediaDevices&&window.MediaRecorder))throw 0;K.stm=await navigator.mediaDevices.getUserMedia({audio:true});K.mr=new MediaRecorder(K.stm);K.ch=[];K.mr.ondataavailable=e=>K.ch.push(e.data);K.mr.onstop=()=>{K.url=URL.createObjectURL(new Blob(K.ch,{type:K.mr.mimeType||'audio/webm'}));K.stm.getTracks().forEach(t=>t.stop());ks()};K.mr.start()}catch(e){toast('無法使用麥克風，請允許瀏覽器的麥克風權限');return}
+if(SRC){K.sr=new SRC();K.sr.lang='en-US';K.sr.interimResults=false;K.sr.onresult=e=>{K.tx=e.results[0][0].transcript;K.res=kev();const k=tgt().key;S.sp=S.sp||{};if(K.res.pct>=80&&!S.sp[k]){S.sp[k]=1;S.xp+=2;act();save();toast('+2 XP')}};K.sr.onerror=()=>{K.err=1};K.sr.onend=()=>{if(K.rec)recStop()};try{K.sr.start()}catch(e){}}
+K.rec=true;ks()}
+function recStop(){K.rec=false;try{if(K.mr&&K.mr.state!=='inactive')K.mr.stop()}catch(e){}try{if(K.sr)K.sr.stop()}catch(e){}ks()}
+function kres(){if(K.err&&!K.res)return `<p class='mute' style='margin-top:12px'>沒有聽到清楚的語音。請靠近麥克風，在安靜的環境再試一次。</p>`;if(!K.res)return SRC||!K.url?'':`<p class='mute' style='margin-top:12px'>這個瀏覽器不支援語音辨識。請聆聽自己的錄音，和示範比較發音與節奏。</p>`;const r=K.res;return `<div class='sec'><h2>辨識結果</h2><p>系統聽到：「${esc(K.tx)}」</p><div class='bar'><div style='width:${r.pct}%'></div></div><p>吻合度約 ${r.pct}%</p><p style='margin-top:6px'>${kfb(r)}</p><p class='mute' style='font-size:13px;margin-top:8px'>這是根據語音辨識結果的粗略估計，不是正式的發音評分。口音、麥克風與環境噪音都會影響結果。</p></div>`}
+function kpanel(t,hide){return `<div class='card' style='margin-top:16px'><div style='font-size:${t.en.length>24?22:30}px;font-weight:700;line-height:1.4'>${hide?`<span class='mute' style='font-size:18px;font-weight:400'>先聽示範，再試著說出來。</span>`:esc(t.en)}</div>${t.ipa&&!hide?`<p class='mute'>${t.ipa}</p>`:''}<p class='mute' style='margin-bottom:12px'>${t.zh}</p><div class='acts'><button class='btn ghost' data-gr='ksay'>播放示範</button><button class='btn ghost' data-gr='kslow'>慢速示範</button>${K.rec?`<button class='btn' style='background:var(--err);color:#fff' data-gr='kstop'>停止錄音</button>`:`<button class='btn' data-gr='kstart'>開始錄音</button>`}</div>${K.rec?`<p class='mute' style='margin-top:10px'>錄音中…請清楚地說出來。</p>`:''}${K.url?`<div class='sec'><h2>你的錄音</h2><audio controls src='${K.url}' style='width:100%'></audio></div>`:''}${kres()}</div>`}
+function speak(){
+if(!K.m)return `<h1>口說中心</h1><p class='mute' style='margin-bottom:12px'>跟著示範練習發音。錄音與語音辨識需要允許瀏覽器使用麥克風。</p><div class='card'>${[['w','單字發音','逐字聆聽示範並跟著說'],['s','句子發音','練習完整例句'],['x','口說練習','看中文提示，說出英文句子'],['c','對話練習','和對方輪流說，扮演對話角色']].map(([k,t,d])=>`<button class='row rowb' data-gr='kopen' data-v='${k}'><span class='rb'><b>${t}</b><br><span class='mute' style='font-size:14px'>${d}</span></span></button>`).join('')}</div>`;
+const back=`<button class='btn ghost' data-gr='kback'>← 返回</button>`;
+if(K.m==='c'){
+if(!K.cv)return back+`<h1 style='margin-top:16px'>對話練習</h1><p class='mute'>對方說完後，輪到你說出回答。</p><div class='card' style='margin-top:12px'>${['greet','rest'].map(id=>`<button class='row rowb' data-gr='kcv' data-v='${id}'><span class='rb'><b>${LD[id].t}</b><br><span class='mute' style='font-size:14px'>${LD[id].c}</span></span></button>`).join('')}</div>`;
+const l=LD[K.cv].l;
+if(K.st>=l.length)return back+`<div class='card' style='margin-top:16px'><h1>對話完成</h1><p class='mute' style='margin:8px 0 14px'>你完成了這段對話。可以重新練習，或返回選擇其他對話。</p><button class='btn' data-gr='kcv' data-v='${K.cv}'>重新開始</button></div>`;
+const mine=K.st%2===1,pg=`<p class='mute' style='margin-top:12px'>${LD[K.cv].t} · 第 ${K.st+1} / ${l.length} 句</p>`;
+if(!mine)return back+pg+`<div class='card' style='margin-top:12px'><p class='mute'>對方說</p><p style='font-size:20px;font-weight:700'>${l[K.st][0]}</p><p class='mute'>${l[K.st][1]}</p><div class='acts' style='margin-top:12px'><button class='btn ghost' data-gr='ksay'>再聽一次</button><button class='btn' data-gr='kcont'>輪到我說</button></div></div>`;
+return back+pg+kpanel(tgt(),!K.hint)+`<div class='acts' style='margin-top:12px'>${K.hint?'':`<button class='chip' data-gr='khint'>顯示提示</button>`}<button class='btn' data-gr='kcont'>下一句</button></div>`}
+const n=K.m==='x'?EX.length:W.length;
+return back+`<div class='wh' style='margin-top:12px'><span class='mute'>第 ${K.i+1} / ${n}</span><div class='acts'><button class='chip' data-gr='kprev'>上一個</button><button class='chip' data-gr='knext'>下一個</button></div></div>`+kpanel(tgt(),false)}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-gr]');if(!b)return;const a=b.dataset.gr,v=b.dataset.v;if(a[0]!=='k')return;
+if(a==='kopen'){K.m=v;K.i=0;K.cv=null;K.st=0;kreset()}
+else if(a==='kback'){if(K.rec)recStop();if(K.m==='c'&&K.cv)K.cv=null;else K.m=null;kreset()}
+else if(a==='kcv'){K.cv=v;K.st=0;kreset();spk(LD[v].l[0][0])}
+else if(a==='kprev'||a==='knext'){const n=K.m==='x'?EX.length:W.length;K.i=(K.i+(a==='knext'?1:n-1))%n;kreset()}
+else if(a==='ksay')return spk(tgt().en);
+else if(a==='kslow')return spkR(tgt().en,.6);
+else if(a==='kstart')return recStart();
+else if(a==='kstop')return recStop();
+else if(a==='khint')K.hint=true;
+else if(a==='kcont'){K.st++;kreset();if(K.st<LD[K.cv].l.length&&K.st%2===0)spk(LD[K.cv].l[K.st][0])}
+ks();if(['kopen','kback','kcv','kprev','knext','kcont'].includes(a))window.scrollTo(0,0)});
+const V={home,learn:learnV,practice:practiceV,progress,profile};
+function render(){
+const r=route();
+document.getElementById('side').innerHTML=`<div class="brand"><i>E</i>English Journey</div>`+navHtml(r,'nav');
+document.getElementById('bottom').innerHTML=navHtml(r,'');
+document.getElementById('main').innerHTML=V[r]();
+document.title='English Journey';
+window.scrollTo(0,0);
+if(r==='profile'){
+const f=(id,fn)=>document.getElementById(id).addEventListener('change',fn);
+f('nm',e=>{S.name=e.target.value.trim()||'學習者';save();render();toast('已儲存名稱')});
+f('lv',e=>{S.level=e.target.value;save();toast('已更新程度')});
+f('gl',e=>{S.goal=+e.target.value;save();toast('已更新每日目標')});
+document.getElementById('dk').onclick=()=>{S.theme=isDark()?'light':'dark';save();setTheme();render()};
+document.getElementById('rs').onclick=()=>{if(confirm('確定要清除所有學習資料嗎？')){S={...DEF};save();setTheme();render()}};
+}}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b){location.hash=b.dataset.go}});
+window.addEventListener('hashchange',render);window.addEventListener('hashchange',()=>{if(K.rec)recStop()});roll();
+setTheme();render();
+</script>
+</body>
+</html>
